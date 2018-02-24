@@ -1,0 +1,54 @@
+/*
+ID: lamduca2
+LANG: C++
+TASK: friday
+*/
+
+
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+int month[]={31,28,31,30,31,30,31,31,30,31,30,31};
+
+
+bool isLeap(int N)
+{
+    return ((N%4==0)&&(N%100!=0))||(N%400==0);
+}
+
+int mlen(int y,int m)
+{
+    if(m==1) return month[m]+isLeap(y);
+    else
+        return month[m];
+}
+
+int main()
+{
+    ofstream fout ("friday.out");
+    ifstream fin ("friday.in");
+    int n;
+    fin >>n;
+    int friday13th[7]={0};
+    int i,j,cur=0;
+    for(i=1900;i<1900+n;i++)
+    {
+        for(j=0;j<12;j++)
+        {
+            friday13th[cur]++;
+            cur=(cur+mlen(i,j))%7;
+        }
+    }
+    for(i=0;i<7;i++)
+    {
+        if(i==6)
+        {
+            fout << friday13th[i]<<endl;
+            break;
+        }
+        fout<<friday13th[i]<<" ";
+    }
+    return 0;
+}
